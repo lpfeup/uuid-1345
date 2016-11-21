@@ -272,10 +272,12 @@ function uuidNamed(hashFunc, version, arg1, arg2) {
     var hash = crypto.createHash(hashFunc);
 
     if (typeof namespace === 'string') {
-        if (!check(namespace)) {
-            return error(invalidNamespace, callback);
+        if(namespace.length > 0) {
+            if (!check(namespace)) {
+                return error(invalidNamespace, callback);
+            }
+            namespace = parse(namespace);
         }
-        namespace = parse(namespace);
     } else if (namespace instanceof UUID) {
         namespace = namespace.toBuffer();
     } else if (!(namespace instanceof Buffer) || namespace.length !== 16) {
